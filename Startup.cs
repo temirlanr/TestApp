@@ -47,19 +47,16 @@ namespace Test_App
             app.UseRouting();
 
             app.UseAuthorization();
-            
-            app.UseEndpoints(routes =>
-            {
-                routes.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Items}/{action=Index}/{id?}");
-            });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
+                    name: "home",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "list_data",
+                    pattern: "{controller=Items}/{action=Index}/{id?}");
             });
         }
     }

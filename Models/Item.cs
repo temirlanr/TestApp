@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Test_App.Models
 {
-    public class Items
+    public class Item
     {
         private ItemStoreContext context;
 

@@ -20,9 +20,9 @@ namespace Test_App.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Items> GetAllAlbums()
+        public List<Item> GetAllItems()
         {
-            List<Items> list = new List<Items>();
+            List<Item> list = new List<Item>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -33,7 +33,7 @@ namespace Test_App.Models
                 {
                     while (reader.Read())
                     {
-                        list.Add(new Items()
+                        list.Add(new Item()
                         {
                             Id = Convert.ToInt32(reader["id"]),
                             Name = reader["Name"].ToString(),

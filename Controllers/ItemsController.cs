@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Test_App.Data;
 using Test_App.Models;
 
 namespace Test_App.Controllers
@@ -13,7 +14,7 @@ namespace Test_App.Controllers
         {
             ItemStoreContext context = HttpContext.RequestServices.GetService(typeof(Test_App.Models.ItemStoreContext)) as ItemStoreContext;
 
-            return View(context.GetAllAlbums());
+            return View(context.GetAllItems());
         }
     }
 }
