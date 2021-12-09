@@ -8,7 +8,7 @@ namespace Test_App.Data
 {
     public interface IItemsRepo
     {
-        IEnumerable<Item> GetAppItems();
-        Item GetItemById(int id);
+        IEnumerable<Item> GetItems();
+        Item GetItem(int id);
     }
 }

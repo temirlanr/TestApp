@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Test_App.Data;
 using Test_App.Models;
 
 namespace Test_App.Controllers
@@ -12,10 +13,17 @@ namespace Test_App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IItemsRepo _repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IItemsRepo repository)
         {
             _logger = logger;
+            _repository = repository;
+        }
+
+        public IActionResult List()
+        {
+            return View(_repository.GetItems());
         }
 
         public IActionResult Index()

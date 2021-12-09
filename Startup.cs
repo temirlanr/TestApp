@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Test_App.Data;
 using Test_App.Models;
 
 namespace Test_App
@@ -24,8 +26,10 @@ namespace Test_App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ItemsContext>(opt => opt.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            services.Add(new ServiceDescriptor(typeof(ItemStoreContext), new ItemStoreContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IItemsRepo, SqlItemsRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,9 +58,6 @@ namespace Test_App
                     name: "home",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute(
-                    name: "list_data",
-                    pattern: "{controller=Items}/{action=Index}/{id?}");
             });
         }
     }
