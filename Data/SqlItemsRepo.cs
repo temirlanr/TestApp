@@ -25,5 +25,20 @@ namespace Test_App.Data
         {
             return _context.Items.FirstOrDefault(i => i.Id == id);
         }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void CreateItem(Item item)
+        {
+            if(item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _context.Items.Add(item);
+        }
     }
 }

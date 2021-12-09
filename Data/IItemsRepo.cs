@@ -8,7 +8,10 @@ namespace Test_App.Data
 {
     public interface IItemsRepo
     {
+        bool SaveChanges();
+
         IEnumerable<Item> GetItems();
         Item GetItem(int id);
+        void CreateItem(Item item);
     }
 }
