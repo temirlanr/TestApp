@@ -14,5 +14,6 @@ namespace Test_App.Data
         Item GetItem(int id);
         void CreateItem(Item item);
         void UpdateItem(Item item);
+        void DeleteItem(Item item);
     }
 }

@@ -103,5 +103,22 @@ namespace Test_App.Controllers
 
             return NoContent();
         }
+
+        // DELETE api/items/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteItem(int id)
+        {
+            var existingItem = _repository.GetItem(id);
+
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            _repository.DeleteItem(existingItem);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

@@ -45,5 +45,15 @@ namespace Test_App.Data
         {
             //Nothing
         }
+
+        public void DeleteItem(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _context.Items.Remove(item);
+        }
     }
 }
