@@ -12,7 +12,11 @@ namespace Test_App.Profiles
     {
         public ItemsProfile()
         {
+            // Source to Target
             CreateMap<Item, ItemReadDto>();
+            CreateMap<ItemCreateDto, Item>();
+            CreateMap<ItemUpdateDto, Item>();
+            CreateMap<Item, ItemUpdateDto>();
         }
     }
 }

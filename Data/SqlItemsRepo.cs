@@ -40,5 +40,10 @@ namespace Test_App.Data
 
             _context.Items.Add(item);
         }
+
+        public void UpdateItem(Item item)
+        {
+            //Nothing
+        }
     }
 }

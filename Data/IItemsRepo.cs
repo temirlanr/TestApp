@@ -13,5 +13,6 @@ namespace Test_App.Data
         IEnumerable<Item> GetItems();
         Item GetItem(int id);
         void CreateItem(Item item);
+        void UpdateItem(Item item);
     }
 }

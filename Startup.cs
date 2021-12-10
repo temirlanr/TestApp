@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Test_App.Data;
 using Test_App.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace Test_App
 {
@@ -28,6 +29,10 @@ namespace Test_App
         {
             services.AddDbContext<ItemsContext>(opt => opt.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IItemsRepo, SqlItemsRepo>();
         }

@@ -7,6 +7,7 @@ using Test_App.Models;
 using Test_App.Data;
 using AutoMapper;
 using Test_App.Dtos;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Test_App.Controllers
 {
@@ -46,5 +47,61 @@ namespace Test_App.Controllers
             return NotFound();
         }
 
+        // POST api/items
+        [HttpPost]
+        public ActionResult<ItemReadDto> CreateItem(ItemCreateDto itemCreateDto)
+        {
+            var itemModel = _mapper.Map<Item>(itemCreateDto);
+            _repository.CreateItem(itemModel);
+            _repository.SaveChanges();
+
+            var itemReadDto = _mapper.Map<ItemReadDto>(itemModel);
+
+            return CreatedAtAction(nameof(GetItem), new { Id = itemReadDto.Id }, itemReadDto);
+        }
+
+        // PUT api/items/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(int id, ItemUpdateDto itemUpdateDto)
+        {
+            var existingItem = _repository.GetItem(id);
+
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(itemUpdateDto, existingItem);
+            _repository.UpdateItem(existingItem);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        // PATCH api/items/{id}
+        [HttpPatch("{id}")]
+        public ActionResult UpdateItemPartial(int id, JsonPatchDocument<ItemUpdateDto> patchDoc)
+        {
+            var existingItem = _repository.GetItem(id);
+
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            var itemToPatch = _mapper.Map<ItemUpdateDto>(existingItem);
+            patchDoc.ApplyTo(itemToPatch, ModelState);
+
+            if (!TryValidateModel(itemToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(itemToPatch, existingItem);
+            _repository.UpdateItem(existingItem);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
